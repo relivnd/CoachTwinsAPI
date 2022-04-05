@@ -70,8 +70,7 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
                         data = studentProfileSetupRequest.ProfileData.ProfilePicture,
                         Id = Guid.NewGuid()
                     };
-                    await UserRepository.AddProfilePicture(pf);
-                    user.ProfilePicture = pf;
+                    await UserRepository.AddProfilePictureFor(pf,user);
                 }
             }
 

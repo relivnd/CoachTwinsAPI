@@ -4,14 +4,16 @@ using CoachTwinsApi.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoachTwinsApi.Db.Migrations
 {
     [DbContext(typeof(CoachTwinsDbContext))]
-    partial class CoachTwinsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220405143030_ProfilePicture_entity_namechange")]
+    partial class ProfilePicture_entity_namechange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,9 +237,6 @@ namespace CoachTwinsApi.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<byte[]>("data")
                         .HasColumnType("varbinary(max)");
 
@@ -282,7 +281,7 @@ namespace CoachTwinsApi.Db.Migrations
                     b.Property<string>("PreviousEducation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProfilePicture")
+                    b.Property<Guid?>("ProfilePictureId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("StartingYear")
@@ -292,6 +291,8 @@ namespace CoachTwinsApi.Db.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfilePictureId");
 
                     b.ToTable("Users");
                 });
@@ -392,6 +393,15 @@ namespace CoachTwinsApi.Db.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("Source");
+                });
+
+            modelBuilder.Entity("CoachTwinsApi.Db.Entities.User", b =>
+                {
+                    b.HasOne("CoachTwinsApi.Db.Entities.ProfilePicture", "ProfilePicture")
+                        .WithMany()
+                        .HasForeignKey("ProfilePictureId");
+
+                    b.Navigation("ProfilePicture");
                 });
 
             modelBuilder.Entity("CoachTwinsApi.Db.Entities.Coach", b =>

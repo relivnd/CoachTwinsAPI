@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.DataProtection;
 using System.Linq;
 using CoachTwinsApi.Db.Extensions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoachTwinsApi.Db.Repository
 {
@@ -76,6 +77,14 @@ namespace CoachTwinsApi.Db.Repository
             if (!_db.Users.Single(u=>u.Id==authTokenObject.ActiveGuid,out var user))
             {
                 return null;
+            }
+            if (_db.ProfilePictures.Single(p=>p.UserId==user.Id,out var picture))
+            {
+                user.ProfilePicture = picture.Id;
+            }
+            else
+            {
+                user.ProfilePicture = Guid.Empty;
             }
             return user;
         }

@@ -18,36 +18,36 @@ namespace CoachTwinsApi.Db.Repository
             this._db = context;   
         }
 
-        public async Task AddProfilePicture(ProfilePicture picture)
+        public async Task AddProfilePictureFor(ProfilePicture pic, User user)
         {
-            if (!_db.ProfilePicture.Single(p=>p.Id==picture.Id,out var res))
-            {
-                _db.ProfilePicture.Add(picture);
-            }
-            else
-            {
-                res.data = picture.data;
-            }
-           await _db.SaveChangesAsync();
+            _db.ProfilePictures.RemoveRange(_db.ProfilePictures.Where(p => p.UserId == user.Id || p.Id == pic.Id));
+            await _db.SaveChangesAsync();
+            var  picture = new ProfilePicture()
+                {
+                    data = pic.data,
+                    UserId = user.Id
+                };
+            _db.ProfilePictures.Add(picture); 
+            user.ProfilePicture = picture.Id;
+            _db.SaveChanges();
         }
 
-        public async Task<byte[]?> GetProfilePicture(Guid id)
+        public async Task<byte[]> GetProfilePicture(Guid id)
         {
-            if (_db.ProfilePicture.Single(p=>p.Id==id,out var res))
-            {
-                return res.data;
-            }
-            return null;
+            return !_db.ProfilePictures.Single(p => p.Id == id, out var picture) ? null : picture.data;
         }
 
         public async Task<byte[]?> GetProfilePictureByUserId(Guid id)
         {
-            if (_db.Users.Single(u=>u.Id==id,out var user))
+            if (!_db.Users.Single(u=>u.Id==id,out var user))
             {
-                var pic = _db.Users.Include("ProfilePicture").Single(uu => uu.Id == user.Id).ProfilePicture;
-                return pic is null ? null : pic.data;
+                return null;
             }
-            return null;
+            if (!_db.ProfilePictures.Single(p=>p.UserId==user.Id,out var picture))
+            {
+                return null;
+            }
+            return picture.data;
         }
     }
 }

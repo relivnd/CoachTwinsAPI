@@ -9,6 +9,7 @@ namespace CoachTwinsApi.Db.Entities
     public class ProfilePicture
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public byte[] data { get; set; }
     }
 }

@@ -154,8 +154,10 @@ namespace CoachTwinsAPI.Controllers
             var dbUser = await GetCurrentUser<User>();
 
             if (dbUser is Coach dbCoach)
+            {
+                var mapped = Mapper.Map<ApiStudent>(dbCoach);
                 return Mapper.Map<ApiCoach>(dbCoach);
-
+            }
             return Forbid();
 
         }
@@ -171,9 +173,15 @@ namespace CoachTwinsAPI.Controllers
 
             if (dbUser is Student dbStudent)
             {
-                var mapped = Mapper.Map<ApiStudent>(dbStudent);
-                mapped.ProfilePicture = dbStudent.ProfilePicture is null ? Guid.Empty : dbStudent.ProfilePicture.Id;
-                return mapped;
+                try
+                {
+                    var mapped = Mapper.Map<ApiStudent>(dbStudent);
+                    return mapped;
+                }catch(Exception e)
+                {
+                    var x = 10;
+                    return null;
+                }
             }
 
             return Forbid();

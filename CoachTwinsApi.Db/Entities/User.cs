@@ -44,7 +44,7 @@ namespace CoachTwinsApi.Db.Entities
         
         public bool IsPrivacyPolicyAccepted { get; set; }
         
-        public virtual ProfilePicture? ProfilePicture { get; set; }
+        public virtual Guid ProfilePicture { get; set; }
 
         public virtual IList<MatchingCriteria> MatchingCriteria { get; set; } = new List<MatchingCriteria>();
     }

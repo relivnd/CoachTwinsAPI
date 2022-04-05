@@ -17,8 +17,6 @@ namespace CoachTwinsApi.Db.Configuration
                 .HasMany(e => e.MatchingCriteria)
                 .WithOne(e => e.User)
                 .OnDelete(DeleteBehavior.Cascade);
-            builder
-                .HasOne(e => e.ProfilePicture);
         }
 
         public UserConfig(EncryptionConverterFactory factory) : base(factory)

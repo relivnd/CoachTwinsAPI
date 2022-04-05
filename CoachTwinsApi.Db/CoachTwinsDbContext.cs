@@ -19,7 +19,7 @@ namespace CoachTwinsApi.Db
         public DbSet<MatchingCriteria> MatchingCriteria { get; set; }
         public DbSet<Criteria> Criteria { get; set; }
         public DbSet<AuthToken> AuthTokens { get; set; }
-        public DbSet<ProfilePicture> ProfilePicture { get; set; }
+        public DbSet<ProfilePicture> ProfilePictures { get; set; }
         public CoachTwinsDbContext(DbContextOptions options, EncryptionConverterFactory converterFactory) : base(options)
         {
             _converterFactory = converterFactory;
