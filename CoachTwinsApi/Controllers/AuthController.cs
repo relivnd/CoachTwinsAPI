@@ -21,7 +21,11 @@ namespace CoachTwinsAPI.Controllers
     [Route("Auth")]
     public class AuthController : BaseController
     {
-
+        [HttpGet]
+        public string test()
+        {
+            return "this is development";
+        }
         public AuthController(IStudentRepository studentRepository, ICoachRepository coachRepository, IUserRepository userRepository, IMapper mapper, IAuthRepository authRepository, AuthStore authStore, IPortalUserRepository portalRepo, IMatchingRepository matchingRepo) : base(studentRepository, coachRepository, userRepository, mapper, authRepository, authStore, portalRepo, matchingRepo)
         {
         }
