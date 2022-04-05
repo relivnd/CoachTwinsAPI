@@ -37,7 +37,9 @@ namespace CoachTwinsAPI
             {
                 options.AddPolicy(name: "local_dev", builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200");
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyHeader();
                 });
             });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -71,11 +73,8 @@ namespace CoachTwinsAPI
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoachTwinsAPI v1"));
-
-
-            if (!env.IsDevelopment())
+            
                 app.UseHttpsRedirection();
-            else
                 app.UseCors("local_dev");
 
             app.UseRouting();
