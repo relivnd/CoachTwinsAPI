@@ -1,0 +1,3 @@
+[submodule "coach-twins-class-library"]
+	path = CoachTwinsClassLibrary
+	url = git@gitlab.com:coach-twins/coach-twins-class-library.git
