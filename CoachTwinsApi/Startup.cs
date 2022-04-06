@@ -73,9 +73,9 @@ namespace CoachTwinsAPI
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoachTwinsAPI v1"));
-            
-                app.UseHttpsRedirection();
-                app.UseCors("local_dev");
+
+            app.UseHttpsRedirection();
+            app.UseCors("local_dev");
 
             app.UseRouting();
             app.UseAuthentication();
@@ -92,9 +92,11 @@ namespace CoachTwinsAPI
 
             using var scope = scopeFactory?.CreateScope();
             var context = scope?.ServiceProvider.GetService<CoachTwinsDbContext>();
-            //context?.Database.Migrate();
-          //  var seeder = scope?.ServiceProvider.GetService<DbSeeder>();
-           // seeder?.Initialize();
+            /*
+            context?.Database.Migrate();
+            var seeder = scope?.ServiceProvider.GetService<DbSeeder>();
+            seeder?.Initialize();
+            */
 
         }
     }

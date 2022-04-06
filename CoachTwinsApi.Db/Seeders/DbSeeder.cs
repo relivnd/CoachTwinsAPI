@@ -276,7 +276,6 @@ namespace CoachTwinsApi.Db.Seeders
 
             _context.Users.AddRange(studentsCoaching);
             _context.Users.AddRange(coaches);
-
             _context.SaveChanges();
         }
     }
