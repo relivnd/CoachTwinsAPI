@@ -11,12 +11,11 @@ namespace CoachTwinsApi.Db.Extensions
     {
         public static void ConfigureEf(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            var connectionStringDevelopment = "CoachTwinsDev";
-            var connectionStringProduction = "CoachTwin";
+            // use either "CoachTwins" or "CoachTwinsDev"
             serviceCollection.AddDbContext<CoachTwinsDbContext>(options =>
                 options
                     .UseLazyLoadingProxies()
-                    .UseSqlServer(configuration.GetConnectionString(connectionStringDevelopment),
+                    .UseSqlServer(configuration.GetConnectionString("CoachTwinsDev"),
                 x => x.MigrationsAssembly("CoachTwinsApi.Db")));
         }
 
