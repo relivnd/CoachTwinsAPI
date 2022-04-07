@@ -178,7 +178,42 @@ namespace CoachTwinsAPI.Controllers
             }
 
             return Forbid();
+        }
 
+        /// <summary>
+        /// REST api action for getting a coach's profile by their guid
+        /// </summary>
+        /// <returns>The coach by its id</returns>
+        [HttpGet("details/coach")]
+        [LoginRequired]
+        public async Task<ActionResult<ApiCoach>> GetCoachDetailsById(Guid id)
+        {
+            var dbUser = await CoachRepository.Get(id);
+
+            if (dbUser is Coach dbCoach)
+            {
+                var mapped = Mapper.Map<ApiCoach>(dbCoach);
+                return mapped;
+            }
+            return NotFound();
+        }
+
+        /// <summary>
+        /// REST api action for getting a students's profile by their guid
+        /// </summary>
+        /// <returns>The coach by its id</returns>
+        [HttpGet("details/student")]
+        [LoginRequired]
+        public async Task<ActionResult<ApiStudent>> GetStudentDetailsById(Guid id)
+        {
+            var dbUser = await StudentRepository.Get(id);
+
+            if (dbUser is Student dbStudent)
+            {
+                var mapped = Mapper.Map<ApiStudent>(dbStudent);
+                return mapped;
+            }
+            return NotFound();
         }
 
         /// <summary>
