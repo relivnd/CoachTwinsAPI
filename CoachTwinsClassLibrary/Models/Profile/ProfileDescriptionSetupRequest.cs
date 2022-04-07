@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CoachTwinsMobileApp.ClassLibrary.Models.Profile
+﻿namespace CoachTwinsMobileApp.ClassLibrary.Models.Profile
 {
     public class ProfileDescriptionSetupRequest
     {
