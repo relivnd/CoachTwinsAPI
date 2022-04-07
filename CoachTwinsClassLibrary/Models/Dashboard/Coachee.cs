@@ -26,7 +26,7 @@ namespace CoachTwinsClassLibrary.Models.Dashboard
         /// <summary>
         /// The coachee's profile picture.
         /// </summary>
-        public byte[] ProfilePicture { get; set; }
+        public Guid ProfilePicture { get; set; }
         
         public int UnreadMessages { get; set; }
         
