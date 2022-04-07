@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
 using CoachTwinsApi;
+using CoachTwinsMobileApp.ClassLibrary.Models.Profile;
 
 namespace CoachTwinsAPI.Controllers.Profile.Setup
 {
@@ -40,13 +41,13 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
 
         [HttpPost("description")]
         [LoginRequired]
-        public async Task SetupDescription(String description)
+        public async Task SetupDescription(ProfileDescriptionSetupRequest description)
         {
             var user = await GetCurrentUser<User>();
             if (user == null)
                 return;
 
-            user.Description = description;
+            user.Description = description.Description;
 
             await UserRepository.Update(user);
         }
