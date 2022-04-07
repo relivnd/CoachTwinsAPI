@@ -38,6 +38,18 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
             return Ok(statusResult);
         }
 
+        [HttpPost("description")]
+        public async Task SetupDescription(String description)
+        {
+            var user = await GetCurrentUser<User>();
+            if (user == null)
+                return;
+
+            user.Description = description;
+
+            await UserRepository.Update(user);
+        }
+
         [HttpPost]
         public async Task SetupProfile(StudentProfileSetupRequest studentProfileSetupRequest,
             [FromServices] ICriteriaRepository criteriaRepository)
