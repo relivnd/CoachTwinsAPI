@@ -39,6 +39,31 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
             return Ok(statusResult);
         }
 
+        [HttpPost("profilePicture")]
+        [LoginRequired]
+        public async Task SetupProfilePicture(ProfilePictureSetupRequest profilePicture)
+        {
+            var user = await GetCurrentUser<User>();
+            if (user == null)
+                return;
+
+            if (profilePicture.ProfilePicture != null)
+            {
+                await using var stream = new MemoryStream(profilePicture.ProfilePicture);
+                if (FileTypeValidator.IsTypeRecognizable(stream) && stream.IsImage())
+                {
+                    var pf = new ProfilePicture()
+                    {
+                        data = profilePicture.ProfilePicture,
+                        Id = Guid.NewGuid(),
+                    };
+                    await UserRepository.AddProfilePictureFor(pf, user);
+                }
+            }
+
+            await UserRepository.Update(user);
+        }
+
         [HttpPost("description")]
         [LoginRequired]
         public async Task SetupDescription(ProfileDescriptionSetupRequest description)
