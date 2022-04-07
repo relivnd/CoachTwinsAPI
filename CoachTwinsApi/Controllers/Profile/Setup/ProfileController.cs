@@ -39,6 +39,7 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
         }
 
         [HttpPost("description")]
+        [LoginRequired]
         public async Task SetupDescription(String description)
         {
             var user = await GetCurrentUser<User>();
