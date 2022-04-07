@@ -15,7 +15,7 @@ namespace CoachTwinsApi.Db.Extensions
             serviceCollection.AddDbContext<CoachTwinsDbContext>(options =>
                 options
                     .UseLazyLoadingProxies()
-                    .UseSqlServer(configuration.GetConnectionString("CoachTwinsDev"),
+                    .UseSqlServer(configuration.GetConnectionString("CoachTwins"),
                 x => x.MigrationsAssembly("CoachTwinsApi.Db")));
         }
 

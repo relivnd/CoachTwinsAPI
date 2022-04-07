@@ -155,7 +155,7 @@ namespace CoachTwinsAPI.Controllers
 
             if (dbUser is Coach dbCoach)
             {
-                var mapped = Mapper.Map<ApiStudent>(dbCoach);
+                var mapped = Mapper.Map<ApiCoach>(dbCoach);
                 return Mapper.Map<ApiCoach>(dbCoach);
             }
             return Forbid();
@@ -173,15 +173,8 @@ namespace CoachTwinsAPI.Controllers
 
             if (dbUser is Student dbStudent)
             {
-                try
-                {
                     var mapped = Mapper.Map<ApiStudent>(dbStudent);
                     return mapped;
-                }catch(Exception e)
-                {
-                    var x = 10;
-                    return null;
-                }
             }
 
             return Forbid();
@@ -194,7 +187,7 @@ namespace CoachTwinsAPI.Controllers
         /// <param name="id"></param>
         /// <returns>string or 204 no content</returns>
         [HttpGet("profilePicture")]
-        [LoginRequired]
+        [LoginRequired(LoginType.Both)]
         
         public async Task<byte[]?> GetProfilePicture(Guid id)
         {
@@ -208,7 +201,7 @@ namespace CoachTwinsAPI.Controllers
         /// <param name="id"></param>
         /// <returns>string or 204 no content</returns>
         [HttpGet("profilePictureByUserId")]
-        [LoginRequired]
+        [LoginRequired(LoginType.Both)]
 
         public async Task<byte[]?> GetProfilePictureByUserId(Guid id)
         {

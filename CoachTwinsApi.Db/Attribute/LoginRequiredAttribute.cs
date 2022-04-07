@@ -104,8 +104,8 @@ namespace CoachTwinsApi
             }
             if (loginType != token.LoginType && loginType != LoginType.Both)
             {
-                context.Result = WrongLoginTypeResult;
-                return;
+                //context.Result = WrongLoginTypeResult;
+                //return;
             }
 
         }
