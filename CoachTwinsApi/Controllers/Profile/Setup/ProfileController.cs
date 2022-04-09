@@ -74,20 +74,20 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
             if (user == null)
                 return;
 
-            if (profileMatchingCriteria.MatchingCriteria.Count == 0)
-                return;
+            //if (profileMatchingCriteria.MatchingCriteria.Count == 0)
+            //    return;
 
-            string criterionKey = "";
-            foreach (var criterion in profileMatchingCriteria.MatchingCriteria)
-                criterionKey = criterion.Key;
+            //string criterionKey = "";
+            //foreach (var criterion in profileMatchingCriteria.MatchingCriteria)
+            //    criterionKey = criterion.Key;
 
-            foreach (var criterion in user.MatchingCriteria)
-            {
-                if (criterion.Criteria.Category == criterionKey)
-                {
-                    user.MatchingCriteria.Remove(criterion);
-                }
-            }
+            //foreach (var criterion in user.MatchingCriteria)
+            //{
+            //    if (criterion.Criteria.Category == criterionKey)
+            //    {
+            //        user.MatchingCriteria.Remove(criterion);
+            //    }
+            //}
 
             foreach (var criterion in profileMatchingCriteria.MatchingCriteria)
             {
