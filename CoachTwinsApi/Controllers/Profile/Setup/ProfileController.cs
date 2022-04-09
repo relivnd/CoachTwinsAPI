@@ -64,6 +64,33 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
             await UserRepository.Update(user);
         }
 
+        [HttpPost("matchingCriteria")]
+        [LoginRequired]
+        public async Task SetupMatchingCriteria(ProfileMatchingCriteriaSetupRequest profileMatchingCriteria, 
+            [FromServices] ICriteriaRepository criteriaRepository)
+        {
+            var user = await GetCurrentUser<User>();
+            if (user == null)
+                return;
+
+            foreach (var criterion in profileMatchingCriteria.MatchingCriteria)
+            {
+                var criteria = await criteriaRepository.Get(criterion.Key);
+
+                if (criteria == null)
+                    continue;
+
+                user.MatchingCriteria.Add(new MatchingCriteria()
+                {
+                    Criteria = criteria,
+                    Prefer = criterion.Prefer,
+                    Value = criterion.Value
+                });
+            }
+
+            await UserRepository.Update(user);
+        }
+
         [HttpPost("description")]
         [LoginRequired]
         public async Task SetupDescription(ProfileDescriptionSetupRequest description)
