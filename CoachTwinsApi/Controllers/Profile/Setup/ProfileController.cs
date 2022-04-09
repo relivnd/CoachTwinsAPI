@@ -74,20 +74,20 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
             if (user == null)
                 return;
 
-            //if (profileMatchingCriteria.MatchingCriteria.Count == 0)
-            //    return;
-
-            //string criterionKey = "";
-            //foreach (var criterion in profileMatchingCriteria.MatchingCriteria)
-            //    criterionKey = criterion.Key;
-
-            //foreach (var criterion in user.MatchingCriteria)
-            //{
-            //    if (criterion.Criteria.Category == criterionKey)
-            //    {
-            //        user.MatchingCriteria.Remove(criterion);
-            //    }
-            //}
+            // create a new list of matching criteria
+            List<MatchingCriteria> matchingCriteria = new List<MatchingCriteria>();
+            foreach (var matchingCriteriaItem in user.MatchingCriteria)
+            {
+                // add to a new list of criteria those criteria from user object
+                // which do not have the category sent in the profileMatchingCriteria
+                // in other words - if the SetupMatchingCriteria function wants to
+                // change list of hobbies, this loop ommits all hobbies in the list
+                // so that newly added ones will not repeat those already present there
+                if (matchingCriteriaItem.Criteria.Category != profileMatchingCriteria.CriterionType)
+                    matchingCriteria.Add(matchingCriteriaItem);
+            }
+            user.MatchingCriteria.Clear();
+            user.MatchingCriteria = matchingCriteria;
 
             foreach (var criterion in profileMatchingCriteria.MatchingCriteria)
             {
@@ -96,6 +96,7 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
                 if (criteria == null)
                     continue;
 
+                
                 user.MatchingCriteria.Add(new MatchingCriteria()
                 {
                     Criteria = criteria,
