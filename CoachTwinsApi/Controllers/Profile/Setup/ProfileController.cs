@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
 using CoachTwinsApi;
 using CoachTwinsMobileApp.ClassLibrary.Models.Profile;
+using System.Collections.Generic;
 
 namespace CoachTwinsAPI.Controllers.Profile.Setup
 {
@@ -73,6 +74,21 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
             if (user == null)
                 return;
 
+            if (profileMatchingCriteria.MatchingCriteria.Count == 0)
+                return;
+
+            string criterionKey = "";
+            foreach (var criterion in profileMatchingCriteria.MatchingCriteria)
+                criterionKey = criterion.Key;
+
+            foreach (var criterion in user.MatchingCriteria)
+            {
+                if (criterion.Criteria.Category == criterionKey)
+                {
+                    user.MatchingCriteria.Remove(criterion);
+                }
+            }
+
             foreach (var criterion in profileMatchingCriteria.MatchingCriteria)
             {
                 var criteria = await criteriaRepository.Get(criterion.Key);
@@ -80,7 +96,6 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
                 if (criteria == null)
                     continue;
 
-                user.MatchingCriteria.Clear();
                 user.MatchingCriteria.Add(new MatchingCriteria()
                 {
                     Criteria = criteria,
