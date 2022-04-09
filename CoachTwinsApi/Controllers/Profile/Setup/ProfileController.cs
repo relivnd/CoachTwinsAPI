@@ -80,6 +80,7 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
                 if (criteria == null)
                     continue;
 
+                user.MatchingCriteria.Clear();
                 user.MatchingCriteria.Add(new MatchingCriteria()
                 {
                     Criteria = criteria,
