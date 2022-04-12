@@ -18,6 +18,7 @@ using RegisterResponse = CoachTwins.Models.Users.RegisterResponse;
 using User = CoachTwinsApi.Db.Entities.User;
 using CoachTwinsApi;
 using CoachTwinsAPI.Extensions;
+using System.IO;
 
 namespace CoachTwinsAPI.Controllers
 {
@@ -29,8 +30,6 @@ namespace CoachTwinsAPI.Controllers
         public LoginController(IStudentRepository studentRepository, ICoachRepository coachRepository, IUserRepository userRepository, IMapper mapper, IAuthRepository authRepository, AuthStore authStore, IPortalUserRepository portalRepo, IMatchingRepository matchingRepo) : base(studentRepository, coachRepository, userRepository, mapper, authRepository, authStore, portalRepo, matchingRepo)
         {
         }
-
-
 
 
         /// <summary>
@@ -243,5 +242,20 @@ namespace CoachTwinsAPI.Controllers
             var pic = await UserRepository.GetProfilePictureByUserId(id);
             return pic;
         }
+        /// <summary>
+        /// Gets the user profile picture as a file from the user's GUID provided in the profile
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>File or 204 no content</returns>
+        [HttpGet("profilePictureFileByUserId")]
+        [LoginRequired(LoginType.Both)]
+
+        public async Task<FileStreamResult> profilePictureFileByUserId(Guid id)
+        {
+            var pic = await UserRepository.GetProfilePictureByUserId(id);
+            return File(new MemoryStream(pic), "application/octet-stream");
+        }
+
+        
     }
 }
