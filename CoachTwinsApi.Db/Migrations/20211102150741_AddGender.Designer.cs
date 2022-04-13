@@ -64,6 +64,11 @@ namespace CoachTwinsApi.Db.Migrations
 
                     b.ToTable("Criteria");
                 });
+            modelBuilder.Entity("CoachTwinsApi.Db.Entities.ProfileReport", r =>
+             {
+                 r.Property<string>("Description")
+                 .HasColumnType("nvarchar(MAX)");
+             });
 
             modelBuilder.Entity("CoachTwinsApi.Db.Entities.Match", b =>
                 {

@@ -4,14 +4,16 @@ using CoachTwinsApi.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoachTwinsApi.Db.Migrations
 {
     [DbContext(typeof(CoachTwinsDbContext))]
-    partial class CoachTwinsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220413115421_ProfileReportAdded")]
+    partial class ProfileReportAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,16 +254,16 @@ namespace CoachTwinsApi.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CoacheeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Issued")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("IssuerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ReportedUserId")
+                    b.Property<Guid>("Issuer")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");

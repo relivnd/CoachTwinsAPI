@@ -75,7 +75,7 @@ namespace CoachTwinsAPI.Controllers.Profile.Setup
                 return;
 
             // create a new list of matching criteria
-            List<MatchingCriteria> matchingCriteria = new List<MatchingCriteria>();
+            List<MatchingCriteria> matchingCriteria = new();
             foreach (var matchingCriteriaItem in user.MatchingCriteria)
             {
                 // add to a new list of criteria those criteria from user object

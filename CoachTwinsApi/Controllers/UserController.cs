@@ -172,8 +172,8 @@ namespace CoachTwinsAPI.Controllers
 
             if (dbUser is Student dbStudent)
             {
-                    var mapped = Mapper.Map<ApiStudent>(dbStudent);
-                    return mapped;
+                var mapped = Mapper.Map<ApiStudent>(dbStudent);
+                return mapped;
             }
 
             return Forbid();
@@ -222,11 +222,11 @@ namespace CoachTwinsAPI.Controllers
         /// <returns>string or 204 no content</returns>
         [HttpGet("profilePicture")]
         [LoginRequired(LoginType.Both)]
-        
+
         public async Task<byte[]?> GetProfilePicture(Guid id)
         {
             var pic = await UserRepository.GetProfilePicture(id);
-            return  pic;
+            return pic;
         }
 
         /// <summary>
@@ -255,7 +255,36 @@ namespace CoachTwinsAPI.Controllers
             var pic = await UserRepository.GetProfilePictureByUserId(id);
             return File(new MemoryStream(pic), "application/octet-stream");
         }
-
-        
+        /// <summary>
+        /// File a report for a user (coach or coachee). The DateTime issued and the Id of the issuer will be determined by the backend. A report is required containing a valid ReportedUserdId and a valid Description on why the user is reported.
+        /// </summary>
+        /// <param name="report"></param>
+        /// <returns>Ok</returns>
+        [HttpPost("reportUser")]
+        [LoginRequired(LoginType.AppUser)]
+        public async Task<ActionResult> ReportUser(ProfileReport report)
+        {
+            if (report == null)
+            {
+                return BadRequest("No report in request body");
+            }
+            var user = await GetCurrentUser<User>();
+            if (await UserRepository.Get(report.ReportedUserId) == null)
+            {
+                return NotFound("User not found");
+            }
+            if (string.IsNullOrEmpty(report.Description))
+            {
+                return BadRequest("Description is empty");
+            }
+            if (report.ReportedUserId == user.Id)
+            {
+                return BadRequest("Reported user is the same as the current user");
+            }
+            report.IssuerId = user.Id;
+            report.Issued = DateTime.Now;
+            await UserRepository.FileReport(report);
+            return Ok("Report filed");
+        }
     }
 }

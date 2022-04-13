@@ -9,6 +9,7 @@ namespace CoachTwinsApi.Db.Repository.Contract
         public Task<byte[]?> GetProfilePicture(Guid id);
         public Task<byte[]?> GetProfilePictureByUserId(Guid id);
         public Task AddProfilePictureFor(ProfilePicture picture, User user);
+        public Task FileReport(ProfileReport report);
 
     }
 

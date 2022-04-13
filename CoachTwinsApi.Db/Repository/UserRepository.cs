@@ -32,6 +32,12 @@ namespace CoachTwinsApi.Db.Repository
             _db.SaveChanges();
         }
 
+        public async Task FileReport(ProfileReport report)
+        {
+            _db.ProfileReports.Add(report);
+           await _db.SaveChangesAsync();
+        }
+
         public async Task<byte[]> GetProfilePicture(Guid id)
         {
             return !_db.ProfilePictures.Single(p => p.Id == id, out var picture) ? null : picture.data;
