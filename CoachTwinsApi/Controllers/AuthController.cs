@@ -9,6 +9,8 @@ using CoachTwinsApi.Db.Entities;
 using CoachTwinsApi.Db.Extensions;
 using Microsoft.AspNetCore.Cors;
 using CoachTwinsApi;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CoachTwinsAPI.Controllers
 {
@@ -57,7 +59,7 @@ namespace CoachTwinsAPI.Controllers
         [HttpGet("CheckToken")]
         public async Task<ActionResult<bool>> CheckToken([FromHeader] string token)
         {
-           var tokenObj = await AuthRepository.Check(token);
+            var tokenObj = await AuthRepository.Check(token);
             return tokenObj is null ? Unauthorized() : Ok();
         }
         /// <summary>
@@ -71,5 +73,18 @@ namespace CoachTwinsAPI.Controllers
             var newToken = await AuthRepository.Update(token);
             return newToken is not null ? Ok(newToken) : Unauthorized();
         }
-    }
+
+        /// <summary>
+        /// Gets all active authtokens, for development only
+        /// </summary>
+        [HttpGet("activeTokens")]
+        public async Task<ActionResult<List<(string token, Guid userId)>>> getActiveTokens(){
+            var tokens = (await AuthRepository.GetAll())
+                .Where(t => t.Active)
+                .Select(t => (t.Value, t.ActiveGuid))
+                .ToList();
+
+            return tokens;
+            }
+}
 }
