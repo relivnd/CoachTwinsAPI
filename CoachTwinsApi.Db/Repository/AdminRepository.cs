@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 
 namespace CoachTwinsApi.Db.Repository
 {
-    public class StudentRepository : BaseRepository<Student, Guid>, IStudentRepository
+    public class AdminRepository : BaseRepository<Administrator, Guid>, IAdminRepository
     {
-        public StudentRepository(CoachTwinsDbContext context) : base(context)
+        public AdminRepository(CoachTwinsDbContext context) : base(context)
         {
         }
 
-       
-       
+        
     }
 }

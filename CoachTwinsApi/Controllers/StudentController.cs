@@ -1,43 +1,30 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using CoachTwins.Models.Users;
-using CoachTwinsAPI.Auth;
-using CoachTwinsApi.Db.Repository;
+﻿using CoachTwinsApi.ApiModels;
 using CoachTwinsApi.Db.Repository.Contract;
-using CoachTwinsAPI.Logic.Matching;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web;
-using Student = CoachTwinsApi.Db.Entities.Student;
-using CoachTwinsApi;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using CoachTwinsApi.Db.Extensions;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using CoachTwinsApi.Db.ApiModels;
+using CoachTwinsApi.Db.Entities;
+using System;
+using CoachTwinsApi.Db.ApiModels.login;
 
-namespace CoachTwinsAPI.Controllers
+namespace CoachTwinsApi.Controllers
 {
-    [LoginRequired]
-    [ApiController]
-    [Route("student")]
-    public class StudentController: BaseController
+    [System.Web.Mvc.Route("Student")]
+    public partial class StudentController : BaseController
     {
-        public StudentController(IStudentRepository studentRepository, ICoachRepository coachRepository, IUserRepository userRepository, IMapper mapper, IAuthRepository authRepository, AuthStore authStore, IPortalUserRepository portalRepo, IMatchingRepository matchingRepo) : base(studentRepository, coachRepository, userRepository, mapper, authRepository, authStore, portalRepo, matchingRepo)
+      [LoginRequired]
+      [HttpPost("BecomeCoach")]
+      public async Task<ActionResult<GenericResponse>> SendCoachRequest()
         {
-        }
-
-        [HttpGet("matched")]
-        public async Task<ActionResult<bool>> IsMatched()
-        {
-            var user = await GetCurrentUser<Student>();
-
-            if (user == null)
-                return Forbid();
-            
-            return Ok(new
+            var student = await GetCurrentStudent();
+            await coachRequestRepo.PerformCoachRequest(student.Id);
+            return new GenericResponse()
             {
-                Matched = user.Match != null
-            });
+                message = "Request has been filed. Please wait for approval by an admin"
+            };
         }
-
-     
     }
 }

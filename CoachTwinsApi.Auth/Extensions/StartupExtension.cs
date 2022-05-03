@@ -6,7 +6,6 @@ namespace CoachTwinsAPI.Auth.Extensions
     {
         public static void AddAuthServices(this IServiceCollection services)
         {
-            services.AddScoped<AuthStore>();
         }
     }
 }

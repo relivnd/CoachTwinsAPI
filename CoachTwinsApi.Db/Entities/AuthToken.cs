@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace CoachTwinsApi.Db.Entities
 {
+    public enum UserType
+    {
+        Student,Administrator
+    }
     public class AuthToken
     {
         public Guid Id { get; set; }
@@ -19,6 +23,6 @@ namespace CoachTwinsApi.Db.Entities
         public bool Active { get; set; } = false;
         public bool IsValid => DateTime.Now <= ValidThru && Active;
         public Guid ActiveGuid { get; set; }
-        public LoginType LoginType { get; set; }
+        public UserType UserType { get; set; }
     }
 }
