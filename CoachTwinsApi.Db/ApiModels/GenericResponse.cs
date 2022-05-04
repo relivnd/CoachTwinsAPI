@@ -8,6 +8,10 @@ namespace CoachTwinsApi.Db.ApiModels
 {
     public class GenericResponse
     {
+        public GenericResponse(string msg)
+        {
+            this.message = msg;
+        }
         public string message { get; set; }
     }
 }

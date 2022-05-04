@@ -74,7 +74,7 @@ namespace CoachTwinsApi.Controllers
             try
             {
                 var success = await coachRequestRepo.Approve(id);
-                return Ok("Request has been approved, student is now a coach");
+                return new GenericResponse("Request has been approved, student is now a coach");
             }
             catch (Exception e)
             {
@@ -89,7 +89,7 @@ namespace CoachTwinsApi.Controllers
             try
             {
                 var success = await coachRequestRepo.Reject(id);
-                return Ok("Request has been rejected, student remains a coachee");
+                return new GenericResponse("Request has been rejected, student remains a coachee");
             }
             catch (Exception e)
             {

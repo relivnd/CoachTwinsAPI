@@ -21,10 +21,7 @@ namespace CoachTwinsApi.Controllers
         {
             var student = await GetCurrentStudent();
             await coachRequestRepo.PerformCoachRequest(student.Id);
-            return new GenericResponse()
-            {
-                message = "Request has been filed. Please wait for approval by an admin"
-            };
+            return new GenericResponse("Request has been filed. Please wait for approval by an admin");
         }
     }
 }
