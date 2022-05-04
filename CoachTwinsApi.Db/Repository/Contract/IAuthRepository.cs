@@ -1,7 +1,9 @@
-﻿using System;
+﻿using CoachTwinsApi.Db.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using CoachTwinsApi.Db.Entities;
-using Microsoft.AspNetCore.Http;
 
 namespace CoachTwinsApi.Db.Repository.Contract
 {
@@ -9,7 +11,6 @@ namespace CoachTwinsApi.Db.Repository.Contract
     {
         public Task<AuthToken?> Check(string token);
         public Task<AuthToken?> Update(string token);
-        public Task<AuthToken?> Login(string username,string password);
-        public Task<User?> GetCurrentUser(string token);
+        public Task<Student?> GetCurrentStudent(string token);
     }
 }

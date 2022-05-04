@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace CoachTwinsAPI.Extensions
+namespace CoachTwinsApi.Extensions
 {
     public static class StringExtensions
     {

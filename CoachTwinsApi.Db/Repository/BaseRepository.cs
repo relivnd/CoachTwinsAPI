@@ -3,10 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CoachTwinsApi.Db.Attribute;
-using CoachTwinsApi.Db.Entities;
 using CoachTwinsApi.Db.Repository.Contract;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoachTwinsApi.Db.Repository
@@ -14,13 +11,11 @@ namespace CoachTwinsApi.Db.Repository
     public class BaseRepository<T, TId> : IBaseRepository<T, TId> where T : class
     {
         protected readonly CoachTwinsDbContext _context;
-        protected readonly EntityEncryptor _encryptor;
         protected readonly DbSet<T> _dbSet;
-        
-        public BaseRepository(CoachTwinsDbContext context, EntityEncryptor encryptor)
+
+        public BaseRepository(CoachTwinsDbContext context)
         {
             _context = context;
-            _encryptor = encryptor;
             _dbSet = context.Set<T>();
         }
 
@@ -55,6 +50,14 @@ namespace CoachTwinsApi.Db.Repository
         {
             _dbSet.Remove(entity);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<(bool succes, T result)> TryFind(Func<T, bool> predicate)
+        {
+            var query = _dbSet.Where(predicate);
+            var succes = query.Count() > 0;
+            var result = succes ? query.First() : null;
+            return (succes, result);
         }
     }
 }

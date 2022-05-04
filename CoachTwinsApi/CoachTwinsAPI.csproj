@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,6 +9,8 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="File.TypeChecker" Version="1.5.3" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,19 +21,19 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Auth\" />
-    <Folder Include="Controllers\Dashboard" />
+    <Folder Include="Extensions\Startup\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoachTwinsApi.Auth\CoachTwinsApi.Auth.csproj" />
     <ProjectReference Include="..\CoachTwinsApi.Db\CoachTwinsApi.Db.csproj" />
-    <ProjectReference Include="..\CoachTwinsApi.Graph\CoachTwinsApi.Graph.csproj" />
-    <ProjectReference Include="..\CoachTwinsApi.Logic\CoachTwinsApi.Logic.csproj" />
-    <ProjectReference Include="..\CoachTwinsClassLibrary\CoachTwinsClassLibrary.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

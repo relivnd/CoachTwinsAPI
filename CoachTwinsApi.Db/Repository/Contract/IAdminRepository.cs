@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace CoachTwinsApi.Db.Repository.Contract
 {
-    public interface IStudentRepository: IBaseRepository<Student, Guid>
+    public interface IAdminRepository: IBaseRepository<Administrator, Guid>
     {
+        
     }
 }

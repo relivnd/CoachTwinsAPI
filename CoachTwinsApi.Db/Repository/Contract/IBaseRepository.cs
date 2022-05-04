@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using System;
 
 namespace CoachTwinsApi.Db.Repository.Contract
 {
@@ -14,5 +16,6 @@ namespace CoachTwinsApi.Db.Repository.Contract
         public Task Create(T entity);
 
         public Task Delete(T entity);
+        public Task<(bool succes, T? result)> TryFind(Func<T, bool> predicate);
     }
 }
